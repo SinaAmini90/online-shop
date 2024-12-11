@@ -47,7 +47,7 @@ const UserDetails: React.FC = () => {
   }
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-lg space-y-4">
+    <div className="p-6 max-w-md w-[85vw] mx-auto bg-white rounded-xl shadow-lg space-y-4">
       <h2 className="text-2xl font-bold text-gray-800">User Details</h2>
       <p>
         <span className="font-semibold">Username:</span> {user.username}
