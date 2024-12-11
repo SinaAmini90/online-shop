@@ -1,13 +1,21 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import UserDetailsPage from "./pages/UserDetails";
+import NotFound from "./pages/NotFound";
 
-// Define types for your props if needed
-interface AppProps {
-  title: string;
-}
-
-// Example of a functional component with typed props
-const App: React.FC<AppProps> = ({ title }) => {
-  return <p>hi</p>;
+const App: React.FC = () => {
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/user-details" element={<UserDetailsPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 };
 
 export default App;
