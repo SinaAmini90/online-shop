@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import UserDetailsPage from "./pages/UserDetails";
 import NotFound from "./pages/NotFound";
+import ProductsList from "./pages/ProductsList";
 
 const App: React.FC = () => {
   return (
@@ -11,6 +12,8 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/user-details" element={<UserDetailsPage />} />
+          <Route path="/products-list" element={<ProductsList />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
