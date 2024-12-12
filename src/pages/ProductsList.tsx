@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Products from "../components/Products";
 
 interface Product {
@@ -12,7 +12,6 @@ interface Product {
 
 const ProductsList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchedStuff, setSearchedStuff] = useState<string>("");
   const [error, setError] = useState<string | null>(null); // Added error state
@@ -26,7 +25,6 @@ const ProductsList: React.FC = () => {
         }
         const data = await response.json();
         setProducts(data);
-        setFilteredProducts(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
           setError(error.message);
@@ -38,22 +36,16 @@ const ProductsList: React.FC = () => {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    if (selectedCategory === "all") {
-      setFilteredProducts(
-        products.filter((product) =>
+  const filteredProducts = useMemo(() => {
+    return selectedCategory === "all"
+      ? products.filter((product) =>
           product.title.toLowerCase().includes(searchedStuff.toLowerCase())
         )
-      );
-    } else {
-      setFilteredProducts(
-        products.filter(
+      : products.filter(
           (product) =>
             product.category === selectedCategory &&
             product.title.toLowerCase().includes(searchedStuff.toLowerCase())
-        )
-      );
-    }
+        );
   }, [selectedCategory, products, searchedStuff]);
 
   useEffect(() => {}, [searchedStuff]);
@@ -77,6 +69,7 @@ const ProductsList: React.FC = () => {
       </>
     );
   }
+  console.log("first");
   return (
     <div className="m-5">
       <div className="flex flex-col sm:gap-4 gap-0 sm:flex-row">
