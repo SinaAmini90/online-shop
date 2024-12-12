@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import UserDetailsPage from "./pages/UserDetails";
 import NotFound from "./pages/NotFound";
 import ProductsList from "./pages/ProductsList";
+import "font-awesome/css/font-awesome.min.css";
 
 const App: React.FC = () => {
   return (
