@@ -5,6 +5,7 @@ import UserDetailsPage from "./pages/UserDetails";
 import NotFound from "./pages/NotFound";
 import ProductsList from "./pages/ProductsList";
 import "font-awesome/css/font-awesome.min.css";
+import Cart from "./pages/Cart";
 
 const App: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/user-details" element={<UserDetailsPage />} />
           <Route path="/products-list" element={<ProductsList />} />
-
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
