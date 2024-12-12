@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ProductItem from "./Product";
 
 interface Product {
   id: number;
@@ -56,28 +57,15 @@ const Products: React.FC = () => {
       <h2>Products</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
-          <div
+          <ProductItem
             key={product.id}
-            className="flex flex-col justify-between border p-4 rounded-lg shadow hover:shadow-lg transition"
-          >
-            <section>
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-64 object-contain mb-4"
-              />
-              <h3 className="text-base font-bold mb-2">{product.title}</h3>
-              <p className="text-sm text-gray-500 mb-4">
-                {product.description}
-              </p>
-            </section>
-            <section className="flex justify-between items-center">
-              <p className="text-xl font-semibold ">price ${product.price}</p>
-              <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-                Add to Cart
-              </button>
-            </section>
-          </div>
+            id={product.id}
+            image={product.image}
+            title={product.title}
+            description={product.description}
+            price={product.price}
+            category={product.category}
+          />
         ))}
       </div>
     </div>
