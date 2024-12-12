@@ -1,21 +1,9 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { removeItem, updateQuantity } from "../redux/cartSlice";
 
 const CartPage: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
-  const dispatch = useDispatch();
-
-  const handleRemove = (id: number) => {
-    dispatch(removeItem(id));
-  };
-
-  const handleQuantityChange = (id: number, quantity: number) => {
-    if (quantity > 0) {
-      dispatch(updateQuantity({ id, quantity }));
-    }
-  };
 
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -31,40 +19,55 @@ const CartPage: React.FC = () => {
         <div>
           <table className="w-full border-collapse">
             <thead>
-              <tr>
-                <th className="border-b py-2">Product</th>
-                <th className="border-b py-2">Price</th>
-                <th className="border-b py-2">Quantity</th>
-                <th className="border-b py-2">Total</th>
-                <th className="border-b py-2">Actions</th>
+              <tr className="border-b bg-zinc-300">
+                <th className="py-2 w-[5%] hidden md:table-cell">#</th>
+                <th className="py-2 w-[25%]">Title</th>
+                <th className="py-2 w-[35%] hidden md:table-cell">
+                  Description
+                </th>
+                <th className="py-2 w-[1%]"></th>
+                <th className="py-2 w-[1%]">Qty</th>
+                <th className="py-2 w-[1%]"></th>
+                <th className="py-2 w-[10%]">Price</th>
+                <th className="py-2 w-[10%]">Total</th>
+                <th className="py-2 w-[1%]"></th>
               </tr>
             </thead>
             <tbody>
-              {cartItems.map((item) => (
-                <tr key={item.id}>
-                  <td className="py-2">{item.title}</td>
-                  <td className="py-2">${item.price.toFixed(2)}</td>
-                  <td className="py-2">
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      min={1}
-                      className="w-16 text-center border"
-                      onChange={(e) =>
-                        handleQuantityChange(item.id, parseInt(e.target.value))
-                      }
-                    />
+              {cartItems.map((item, index) => (
+                <tr
+                  className={`"border-b " ${
+                    index % 2 === 0 ? "" : "bg-zinc-100"
+                  }`}
+                  key={item.id}
+                >
+                  <td className="py-2 text-center hidden md:table-cell">
+                    {index + 1}
                   </td>
-                  <td className="py-2">
-                    ${(item.price * item.quantity).toFixed(2)}
+                  <td className="py-2 ">{item.title}</td>
+                  <td className="py-2 px-5 hidden md:table-cell">
+                    {item.description}
                   </td>
-                  <td className="py-2">
-                    <button
-                      onClick={() => handleRemove(item.id)}
-                      className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
-                    >
-                      Remove
+                  <td className="py-2 text-center">
+                    <button className=" items-center justify-center text-white bg-red-700 h-6 w-6 rounded-full hover:bg-gray-400">
+                      -
                     </button>
+                  </td>
+                  <td className="py-2 text-center">
+                    <span className="text-center m-2">{item.quantity}</span>
+                  </td>
+                  <td className="py-2 text-center">
+                    <button className=" items-center justify-center text-white bg-blue-700 h-6 w-6 rounded-full hover:bg-gray-400">
+                      +
+                    </button>
+                  </td>
+
+                  <td className="py-2 text-center">${item.price.toFixed(2)}</td>
+                  <td className="py-2 text-center">
+                    {(item.quantity * item.price).toFixed(2)}
+                  </td>
+                  <td className="py-2 text-center">
+                    <i className="fa fa-trash bg-red-700 p-2 rounded-full text-white"></i>
                   </td>
                 </tr>
               ))}
