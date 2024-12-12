@@ -6,11 +6,13 @@ import NotFound from "./pages/NotFound";
 import ProductsList from "./pages/ProductsList";
 import "font-awesome/css/font-awesome.min.css";
 import Cart from "./pages/Cart";
+import Navbar from "./components/Navbar";
 
 const App: React.FC = () => {
   return (
     <Router>
       <div className="App">
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/user-details" element={<UserDetailsPage />} />
