@@ -1,4 +1,7 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { addItem, updateQuantity } from "../redux/cartSlice";
 interface Product {
   id: number;
   title: string;
@@ -13,8 +16,20 @@ const ProductItem: React.FC<Product> = ({
   title,
   description,
   price,
-  category,
 }) => {
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+
+  const dispatch = useDispatch();
+  const handleAddToCart = () => {
+    dispatch(addItem({ id, title, price, description, quantity: 1 }));
+    console.log(cartItems);
+  };
+  const handleRemoveFromCart = () => {
+    dispatch(updateQuantity({ id, quantity: -1 }));
+    console.log(cartItems);
+  };
+  const productQuantity =
+    cartItems.find((item) => item.id === id)?.quantity || 0;
   return (
     <div
       key={id}
@@ -31,9 +46,31 @@ const ProductItem: React.FC<Product> = ({
       </section>
       <section className="flex justify-between items-center">
         <p className="font-semibold ">price ${price}</p>
-        <button className="bg-blue-500 text-white py-2 px-4 w-fit rounded hover:bg-blue-600">
-          Add to Cart
-        </button>
+
+        {productQuantity > 0 ? (
+          <div className="flex justify-between items-center w-32 h-10">
+            <button
+              onClick={handleRemoveFromCart}
+              className="bg-gray-300 text-gray-700 px-2 py-1 w-10 rounded hover:bg-gray-400"
+            >
+              -
+            </button>
+            <span className="font-bold text-gray-800">{productQuantity}</span>
+            <button
+              onClick={handleAddToCart}
+              className="bg-gray-300 text-gray-700 px-2 py-1 w-10 rounded hover:bg-gray-400"
+            >
+              +
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={handleAddToCart}
+            className="bg-blue-500 text-white py-2 px-4 w-32 rounded hover:bg-blue-600"
+          >
+            Add to Cart
+          </button>
+        )}
       </section>
     </div>
   );
