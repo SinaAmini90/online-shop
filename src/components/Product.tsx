@@ -13,6 +13,7 @@ const ProductItem: React.FC<Product> = ({
   title,
   description,
   price,
+  category,
 }) => {
   return (
     <div
@@ -29,8 +30,8 @@ const ProductItem: React.FC<Product> = ({
         <p className="text-sm text-gray-500 mb-4">{description}</p>
       </section>
       <section className="flex justify-between items-center">
-        <p className="text-xl font-semibold ">price ${price}</p>
-        <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+        <p className="font-semibold ">price ${price}</p>
+        <button className="bg-blue-500 text-white py-2 px-4 w-fit rounded hover:bg-blue-600">
           Add to Cart
         </button>
       </section>
