@@ -29,8 +29,12 @@ const UserDetails: React.FC = () => {
         if (!response.ok) throw new Error("Failed to fetch user details.");
         const data: User = await response.json();
         setUser(data);
-      } catch (err: any) {
-        setError(err.message || "Something went wrong.");
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message || "Something went wrong.");
+        } else {
+          setError("Something went wrong.");
+        }
       }
     };
 
