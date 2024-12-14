@@ -22,11 +22,9 @@ const ProductItem: React.FC<Product> = ({
   const dispatch = useDispatch();
   const handleAddToCart = () => {
     dispatch(addItem({ id, title, price, description, quantity: 1 }));
-    console.log(cartItems);
   };
   const handleRemoveFromCart = () => {
     dispatch(updateQuantity({ id, quantity: -1 }));
-    console.log(cartItems);
   };
   const productQuantity =
     cartItems.find((item) => item.id === id)?.quantity || 0;
