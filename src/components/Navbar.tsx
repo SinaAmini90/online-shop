@@ -13,12 +13,12 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="flex justify-between align-middle p-4 bg-gray-800 text-white">
-      <div className="my-auto w-3/12">
+      <NavLink to="/user-details" className="my-auto w-3/12">
         <p className="text-center border-2 rounded-full w-8 h-8 mr-2 inline-flex justify-center items-center">
           <i className="fa fa-user"></i>
         </p>
         hi, {profileName}
-      </div>
+      </NavLink>
       <p
         className="text-5xl font-bold w-6/12 text-center "
         style={{
