@@ -12,15 +12,18 @@ import Footer from "./components/Footer";
 const App: React.FC = () => {
   return (
     <Router>
-      <div className="App">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/user-details" element={<UserDetailsPage />} />
-          <Route path="/products-list" element={<ProductsList />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+      <div className="App flex flex-col justify-between min-h-screen">
+        <div className="flex flex-col">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/user-details" element={<UserDetailsPage />} />
+            <Route path="/products-list" element={<ProductsList />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+
         <Footer />
       </div>
     </Router>
