@@ -15,7 +15,7 @@ const ProductsList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchedStuff, setSearchedStuff] = useState<string>("");
-  const [error, setError] = useState<string | null>(null); // Added error state
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -49,8 +49,6 @@ const ProductsList: React.FC = () => {
         );
   }, [selectedCategory, products, searchedStuff]);
 
-  useEffect(() => {}, [searchedStuff]);
-
   if (error) {
     return (
       <ErrorModual message={error}>
@@ -63,7 +61,6 @@ const ProductsList: React.FC = () => {
       </ErrorModual>
     );
   }
-  console.log("first");
   return (
     <div className="m-5">
       <div className="flex flex-col sm:gap-4 gap-0 sm:flex-row">
@@ -91,8 +88,11 @@ const ProductsList: React.FC = () => {
           <option value="electronics">Electronics</option>
         </select>
       </div>
-
-      <Products products={filteredProducts} />
+      {filteredProducts.length === 0 && searchedStuff.length !== 0 ? (
+        <p className="text-center text-xl mt-5">No results were found!</p>
+      ) : (
+        <Products products={filteredProducts} />
+      )}
     </div>
   );
 };
