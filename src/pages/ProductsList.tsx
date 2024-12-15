@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Products from "../components/Products";
+import ErrorModual from "../components/Error";
 
 interface Product {
   id: number;
@@ -49,24 +50,17 @@ const ProductsList: React.FC = () => {
   }, [selectedCategory, products, searchedStuff]);
 
   useEffect(() => {}, [searchedStuff]);
+
   if (error) {
     return (
-      <>
-        <div className="flex flex-col items-center justify-center p-4 bg-red-100 rounded-lg shadow-md w-full sm:w-1/2 mx-auto">
-          <p className="text-red-600 font-semibold text-lg mb-4">
-            Error: {error}
-          </p>
-          <button
-            onClick={() => {
-              setError(null);
-              window.location.reload();
-            }}
-            className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-300"
-          >
-            Try Again
-          </button>
-        </div>
-      </>
+      <ErrorModual message={error}>
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-300"
+        >
+          Try Again
+        </button>
+      </ErrorModual>
     );
   }
   console.log("first");
