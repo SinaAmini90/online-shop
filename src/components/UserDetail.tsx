@@ -1,45 +1,18 @@
-import React, { useEffect, useState } from "react";
-
-interface Address {
-  number: number;
-  street: string;
-  city: string;
-  zipcode: string;
-}
-
-interface User {
-  username: string;
-  name: {
-    firstname: string;
-    lastname: string;
-  };
-  email: string;
-  phone: string;
-  address: Address;
-}
+import React, { useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { fetchUser } from "../redux/profileActions";
+import { RootState } from "../redux/store";
+import { useSelector } from "react-redux";
 
 const UserDetails: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const user = useSelector((state: RootState) => state.profile.user);
+
+  const error = useAppSelector((state: RootState) => state.profile.error);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch("https://fakestoreapi.com/users/1");
-        if (!response.ok) throw new Error("Failed to fetch user details.");
-        const data: User = await response.json();
-        setUser(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message || "Something went wrong.");
-        } else {
-          setError("Something went wrong.");
-        }
-      }
-    };
-
-    fetchUser();
-  }, []);
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   if (error) return <div className="text-red-500">Error: {error}</div>;
   if (!user) {
