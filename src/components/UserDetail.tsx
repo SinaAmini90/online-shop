@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 
