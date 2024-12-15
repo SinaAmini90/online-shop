@@ -2,12 +2,24 @@ import React from "react";
 import { useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
+import ErrorModule from "./Error";
 
 const UserDetails: React.FC = () => {
   const user = useSelector((state: RootState) => state.profile.user);
 
   const error = useAppSelector((state: RootState) => state.profile.error);
-  if (error) return <div className="text-red-500">Error: {error}</div>;
+  if (error) {
+    return (
+      <ErrorModule message={error}>
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-300"
+        >
+          Try Again
+        </button>
+      </ErrorModule>
+    );
+  }
   if (!user) {
     return (
       <div className="flex justify-center items-center">
