@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { useAppDispatch } from "../redux/hooks";
+import { fetchUser } from "../redux/profileActions";
 
 const Navbar: React.FC = () => {
   const cartItemsCount = useSelector(
@@ -12,6 +14,8 @@ const Navbar: React.FC = () => {
   );
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  dispatch(fetchUser());
 
   return (
     <nav className="flex justify-between items-center p-4 bg-gray-800 text-white relative">

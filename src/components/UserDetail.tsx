@@ -1,19 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { fetchUser } from "../redux/profileActions";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 
 const UserDetails: React.FC = () => {
-  const dispatch = useAppDispatch();
   const user = useSelector((state: RootState) => state.profile.user);
 
   const error = useAppSelector((state: RootState) => state.profile.error);
-
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
-
   if (error) return <div className="text-red-500">Error: {error}</div>;
   if (!user) {
     return (
