@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
+import { useAppSelector } from "../redux/hooks";
 import Products from "../components/Products";
 import ErrorModual from "../components/Error";
-
 interface Product {
   id: number;
   title: string;
@@ -10,46 +10,39 @@ interface Product {
   category: string;
   description: string;
 }
-
+interface AppState {
+  products: {
+    products: Product[];
+    loading: boolean;
+    error: string | null;
+  };
+}
 const ProductsList: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const { products, loading, error } = useAppSelector(
+    (state: AppState) => state.products
+  );
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchedStuff, setSearchedStuff] = useState<string>("");
-  const [error, setError] = useState<string | null>(null); // Added error state
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("https://fakestoreapi.com/products");
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data = await response.json();
-        setProducts(data);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError("Something went wrong while fetching products.");
-        }
-      }
-    };
-    fetchProducts();
-  }, []);
 
   const filteredProducts = useMemo(() => {
     return selectedCategory === "all"
-      ? products.filter((product) =>
+      ? products.filter((product: Product) =>
           product.title.toLowerCase().includes(searchedStuff.toLowerCase())
         )
       : products.filter(
-          (product) =>
+          (product: Product) =>
             product.category === selectedCategory &&
             product.title.toLowerCase().includes(searchedStuff.toLowerCase())
         );
   }, [selectedCategory, products, searchedStuff]);
 
-  useEffect(() => {}, [searchedStuff]);
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center">
+        <div className="spinner-border animate-spin border-4 rounded-full border-blue-500 border-t-transparent w-8 h-8" />
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -63,7 +56,7 @@ const ProductsList: React.FC = () => {
       </ErrorModual>
     );
   }
-  console.log("first");
+
   return (
     <div className="m-5">
       <div className="flex flex-col sm:gap-4 gap-0 sm:flex-row">
@@ -71,7 +64,6 @@ const ProductsList: React.FC = () => {
           <i className="fa fa-search text-gray-500 mr-2"></i>
           <input
             type="text"
-            id="search"
             value={searchedStuff}
             onChange={(event) => setSearchedStuff(event.target.value)}
             placeholder="Search..."
@@ -92,7 +84,11 @@ const ProductsList: React.FC = () => {
         </select>
       </div>
 
-      <Products products={filteredProducts} />
+      {filteredProducts.length === 0 && searchedStuff.length !== 0 ? (
+        <p className="text-center text-xl mt-5">No results were found!</p>
+      ) : (
+        <Products products={filteredProducts} />
+      )}
     </div>
   );
 };
