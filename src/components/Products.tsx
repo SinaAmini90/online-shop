@@ -1,5 +1,6 @@
 import React from "react";
 import ProductItem from "./Product";
+import Loading from "./Loading";
 
 interface ProductProps {
   id: number;
@@ -16,11 +17,7 @@ interface ProductsProps {
 
 const Products: React.FC<ProductsProps> = ({ products }) => {
   if (products.length === 0) {
-    return (
-      <div className="flex justify-center items-center">
-        <div className="spinner-border animate-spin border-4 rounded-full border-blue-500 border-t-transparent w-8 h-8" />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
