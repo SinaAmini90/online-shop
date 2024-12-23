@@ -35,11 +35,9 @@ const CartItem: React.FC = () => {
           className={`border-b ${index % 2 === 0 ? "" : "bg-zinc-100"}`}
           key={item.id}
         >
-          <td className="py-2 text-center hidden md:table-cell ">
-            {index + 1}
-          </td>
-          <td className="py-2">{item.title}</td>
-          <td className="py-2 px-5 hidden md:table-cell">{item.description}</td>
+          <td className="py-2 text-center min-w-5">{index + 1}</td>
+          <td className="py-2 min-w-12">{item.title}</td>
+          <td className="py-2 px-5">{item.description}</td>
           <td className="py-2 text-center">
             <button
               onClick={() => handleDecrease(item.id)}
