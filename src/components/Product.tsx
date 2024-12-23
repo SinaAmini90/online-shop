@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { addItem, updateQuantity } from "../redux/cartSlice";
+import { addItem, updateQuantity, removeItem } from "../redux/cartSlice";
 interface Product {
   id: number;
   title: string;
@@ -23,9 +23,16 @@ const ProductItem: React.FC<Product> = ({
   const handleAddToCart = () => {
     dispatch(addItem({ id, title, price, description, quantity: 1 }));
   };
-  const handleRemoveFromCart = () => {
-    dispatch(updateQuantity({ id, quantity: -1 }));
+  const handleRemoveFromCart = (id: number) => {
+    const quantity = cartItems.find((item) => item.id === id)!.quantity;
+    if (quantity > 1) {
+      dispatch(updateQuantity({ id, quantity: -1 }));
+    } else {
+      dispatch(removeItem(id));
+    }
+    // dispatch(updateQuantity({ id, quantity: -1 }));
   };
+
   const productQuantity =
     cartItems.find((item) => item.id === id)?.quantity || 0;
   return (
@@ -48,7 +55,7 @@ const ProductItem: React.FC<Product> = ({
         {productQuantity > 0 ? (
           <div className="flex justify-between items-center w-32 h-10">
             <button
-              onClick={handleRemoveFromCart}
+              onClick={() => handleRemoveFromCart(id)}
               className="bg-gray-300 text-gray-700 px-2 py-1 w-10 rounded hover:bg-gray-400"
             >
               -
