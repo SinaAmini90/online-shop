@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
           }
           to="/cart"
         >
-          ({cartItemsCount}) Cart
+          {cartItemsCount > 0 ? cartItemsCount : ""} Cart
         </NavLink>
         <NavLink
           className={({ isActive }) =>
@@ -96,7 +96,7 @@ const Navbar: React.FC = () => {
               to="/cart"
               onClick={() => setIsMenuOpen(false)} // Close menu on click
             >
-              ({cartItemsCount}) Cart
+              {cartItemsCount > 0 ? cartItemsCount : ""} Cart
             </NavLink>
             <NavLink
               className={({ isActive }) =>
