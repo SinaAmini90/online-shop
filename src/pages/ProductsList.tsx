@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { useAppSelector } from "../redux/hooks";
 import Products from "../components/Products";
 import ErrorModual from "../components/Error";
+import Loading from "../components/Loading";
 interface Product {
   id: number;
   title: string;
@@ -37,11 +38,7 @@ const ProductsList: React.FC = () => {
   }, [selectedCategory, products, searchedStuff]);
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center">
-        <div className="spinner-border animate-spin border-4 rounded-full border-blue-500 border-t-transparent w-8 h-8" />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) {
