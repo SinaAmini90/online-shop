@@ -7,8 +7,10 @@ import { fetchUser } from "../redux/profileActions";
 import { fetchProducts } from "../redux/productsActions";
 
 const Navbar: React.FC = () => {
-  const cartItemsCount = useSelector(
-    (state: RootState) => state.cart.items.length
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartItemsCount = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
   );
   const profileName = useSelector(
     (state: RootState) => state.profile.user?.name.firstname || "Guest"
@@ -50,7 +52,7 @@ const Navbar: React.FC = () => {
           }
           to="/cart"
         >
-          ({cartItemsCount}) Cart
+          {cartItemsCount > 0 ? cartItemsCount : ""} Cart
         </NavLink>
         <NavLink
           className={({ isActive }) =>
@@ -96,7 +98,7 @@ const Navbar: React.FC = () => {
               to="/cart"
               onClick={() => setIsMenuOpen(false)} // Close menu on click
             >
-              ({cartItemsCount}) Cart
+              {cartItemsCount > 0 ? cartItemsCount : ""} Cart
             </NavLink>
             <NavLink
               className={({ isActive }) =>
